@@ -3,12 +3,16 @@
 import 'dart:ui';
 
 import 'package:delivery_app/providers/auth_provider.dart';
+import 'package:delivery_app/providers/location_provider.dart';
+import 'package:delivery_app/screens/map_screen.dart';
 import 'package:delivery_app/screens/onboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  static const String id = 'welcome-screen';
+
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
@@ -106,6 +110,8 @@ class WelcomeScreen extends StatelessWidget {
               }));
     }
 
+    final locationData = Provider.of<LocationPovider>(context, listen: false);
+
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -133,7 +139,14 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   FlatButton(
                     color: Colors.deepOrangeAccent,
-                    onPressed: () {},
+                    onPressed: () async {
+                      await locationData.getCurrentPosition();
+                      if (locationData.permissonAllowed == true) {
+                        Navigator.pushReplacementNamed(context, MapScreen.id);
+                      } else {
+                        print('error');
+                      }
+                    },
                     child: Text(
                       'Set Delivery Location',
                       style: TextStyle(color: Colors.white),

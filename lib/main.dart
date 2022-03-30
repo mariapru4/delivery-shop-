@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:delivery_app/providers/auth_provider.dart';
+import 'package:delivery_app/providers/location_provider.dart';
 import 'package:delivery_app/screens/home_screen.dart';
-import 'package:delivery_app/screens/onboard_screen.dart';
-import 'package:delivery_app/screens/register_screen.dart';
+import 'package:delivery_app/screens/map_screen.dart';
 import 'package:delivery_app/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +18,9 @@ void main() async {
     providers: [
       ChangeNotifierProvider(
         create: (_) => AuthProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => LocationPovider(),
       )
     ],
     child: MyApp(),
@@ -31,14 +34,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.deepOrangeAccent),
-      home: SplashScreen(),
+      initialRoute: SplashScreen.id,
+      routes: {
+        HomeScreen.id: (context) => HomeScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        SplashScreen.id: (context) => SplashScreen(),
+        MapScreen.id: (context) => MapScreen(),
+      },
     );
   }
 }
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
+  static const String id = 'splash-screen';
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
