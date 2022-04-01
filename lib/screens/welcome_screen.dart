@@ -10,9 +10,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome-screen';
 
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
@@ -85,20 +90,36 @@ class WelcomeScreen extends StatelessWidget {
                               child: AbsorbPointer(
                                 absorbing: _validPhoneNumber ? false : true,
                                 child: FlatButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        auth.loading = true;
+                                      });
+                                      String number = '+917999999999';
+                                      print(number);
+                                      auth.verifyPhone(
+                                          context: context,
+                                          number: number,
+                                          latitude: null,
+                                          longitude: null,
+                                          address: null);
+                                      auth.loading = false;
+                                    },
                                     color: _validPhoneNumber
                                         ? Theme.of(context).primaryColor
                                         : Colors.grey,
-                                    onPressed: () {
-                                      String number = '+917999999999';
-                                      print(number);
-                                      auth.verifyPhone(context, number);
-                                    },
-                                    child: Text(
-                                      _validPhoneNumber
-                                          ? 'CONTINUE'
-                                          : 'ENTER PHONE NUMBER',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
+                                    child: auth.loading
+                                        ? CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    Colors.white),
+                                          )
+                                        : Text(
+                                            _validPhoneNumber
+                                                ? 'CONTINUE'
+                                                : 'ENTER PHONE NUMBER',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          )),
                               ),
                             ),
                           ],

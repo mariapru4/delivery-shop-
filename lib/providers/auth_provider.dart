@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,21 +13,34 @@ class AuthProvider with ChangeNotifier {
   late String verificationId;
   String error = '';
   UserServices _userServices = UserServices();
+  bool loading = false;
 
-  Future<void> verifyPhone(BuildContext context, String number) async {
+  Future<void> verifyPhone(
+      {BuildContext? context,
+      required String number,
+      double? latitude,
+      double? longitude,
+      String? address}) async {
+    this.loading = true;
+    notifyListeners();
     final PhoneVerificationCompleted verificationCompleted =
         (PhoneAuthCredential credential) async {
+      this.loading = false;
+      notifyListeners();
       await _auth.signInWithCredential(credential);
     };
     final PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException e) {
+      this.loading = false;
       print('e' + e.code);
+      this.error = e.toString();
+      notifyListeners();
     };
     final PhoneCodeSent smsOtpSend = (String verId, int? resendToken) async {
       this.verificationId = verId;
 
       //open dialog to enter received OTP SMS
-      smsOtpDialog(context, number);
+      smsOtpDialog(context!, number, latitude, longitude, address);
     };
     try {
       _auth.verifyPhoneNumber(
@@ -39,11 +53,14 @@ class AuthProvider with ChangeNotifier {
         },
       );
     } catch (e) {
+      this.error = e.toString();
+      notifyListeners();
       print(e);
     }
   }
 
-  Future<bool> smsOtpDialog(BuildContext context, String number) async {
+  Future<bool> smsOtpDialog(BuildContext context, String number,
+      double? latitude, double? longitude, String? address) async {
     bool goBack = false;
     await showDialog(
         context: context,
@@ -85,7 +102,12 @@ class AuthProvider with ChangeNotifier {
                               .signInWithCredential(phoneAuthCredential))
                           .user;
                       //create user data in firestore after user successfully registered
-                      _createUser(id: user!.uid, number: user.phoneNumber);
+                      _createUser(
+                          id: user!.uid,
+                          number: user.phoneNumber,
+                          latitude: null,
+                          longitude: null,
+                          address: null);
                       //navigate to Home page after login
                       if (user != null) {
                         Navigator.of(context).pop();
@@ -109,7 +131,35 @@ class AuthProvider with ChangeNotifier {
     return goBack;
   }
 
-  void _createUser({String? id, String? number}) {
-    _userServices.createUser({'id': id, 'number': number});
+  void _createUser({
+    String? id,
+    String? number,
+    double? latitude,
+    double? longitude,
+    String? address,
+  }) {
+    _userServices.createUser({
+      'id': id,
+      'number': number,
+      'latitude': latitude,
+      'longitude': longitude,
+      'address': address
+    });
+  }
+
+  void updateUser({
+    String? id,
+    String? number,
+    double? latitude,
+    double? longitude,
+    String? address,
+  }) {
+    _userServices.updateUserData({
+      'id': id,
+      'number': number,
+      'latitude': latitude,
+      'longitude': longitude,
+      'address': address
+    });
   }
 }

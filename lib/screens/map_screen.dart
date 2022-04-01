@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'dart:ui';
 
 // import 'package:delivery_app/providers/location_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
@@ -10,6 +12,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
 
 class MapScreen extends StatefulWidget {
   static const String id = 'map-screen';
@@ -22,9 +26,11 @@ class _MapScreenState extends State<MapScreen> {
   Completer<GoogleMapController> _controller = Completer();
   LocationData? _currentPosition;
   LatLng? _latLng;
-  bool _locating = false;
-  geocoding.Placemark? _placemark;
 
+  geocoding.Placemark? _placemark;
+  bool _loading = false;
+  bool _loggedIn = false;
+  User? user;
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -33,6 +39,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     _getUserLocation();
+    getCurrentUser();
     super.initState();
   }
 
@@ -78,8 +85,21 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  getCurrentUser() {
+    setState(() {
+      user = FirebaseAuth.instance.currentUser;
+    });
+
+    if (user != null) {
+      setState(() {
+        _loggedIn = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final _auth = Provider.of<AuthProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -103,13 +123,13 @@ class _MapScreenState extends State<MapScreen> {
                         },
                         onCameraMove: (CameraPosition position) {
                           setState(() {
-                            _locating = true;
                             _latLng = position.target;
+                            _loading = true;
                           });
                         },
                         onCameraIdle: () {
                           setState(() {
-                            _locating = false;
+                            _loading = false;
                           });
                           getUserAddress();
                         },
@@ -127,18 +147,25 @@ class _MapScreenState extends State<MapScreen> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Column(
                     children: [
+                      _loading
+                          ? LinearProgressIndicator(
+                              backgroundColor: Colors.transparent,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Theme.of(context).primaryColor),
+                            )
+                          : SizedBox(
+                              height: 5,
+                            ),
                       _placemark != null
                           ? Column(
                               children: [
                                 Text(
-                                  _locating
-                                      ? 'Locating...'
-                                      : _placemark!.street!,
+                                  _placemark!.street!,
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
@@ -162,8 +189,35 @@ class _MapScreenState extends State<MapScreen> {
                           Expanded(
                             child: ElevatedButton(
                                 onPressed: () {
-                                  print(_placemark!.toJson());
+                                  if (_loggedIn != false) {
+                                    _auth.updateUser(
+                                      id: user!.uid,
+                                      number: user!.phoneNumber,
+                                      latitude: _currentPosition!.latitude!,
+                                      longitude: _currentPosition!.longitude!,
+                                      address: _placemark!.street,
+                                    );
+                                  } else {
+                                    final snackBar = SnackBar(
+                                      content: const Text(
+                                          'TO CONFIRM LOCATION FIRST LOGIN '),
+                                      action: SnackBarAction(
+                                        label: 'Login',
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context, 'welcome-screen');
+                                        },
+                                      ),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
                                 },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.deepOrangeAccent),
+                                ),
                                 child: Text('Confirm Location')),
                           ),
                         ],
