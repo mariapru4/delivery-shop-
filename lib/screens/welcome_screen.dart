@@ -90,10 +90,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               child: AbsorbPointer(
                                 absorbing: _validPhoneNumber ? false : true,
                                 child: FlatButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30)),
                                     onPressed: () {
                                       setState(() {
                                         auth.loading = true;
                                       });
+
                                       String number = '+917999999999';
                                       print(number);
                                       auth.verifyPhone(
@@ -168,6 +172,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         print('error');
                       }
                     },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                     child: Text(
                       'Set Delivery Location',
                       style: TextStyle(color: Colors.white),

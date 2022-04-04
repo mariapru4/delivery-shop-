@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:geocode/geocode.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
+
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -9,6 +8,7 @@ class LocationPovider with ChangeNotifier {
   late double longitude;
   bool permissonAllowed = false;
   var selectedAddress;
+  // late geocoding.Placemark _placemark;
 
   Future<void> getCurrentPosition() async {
     Position position = await Geolocator.getCurrentPosition(
@@ -29,11 +29,18 @@ class LocationPovider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> getMoveCamera() async {
-  //   final coordinates = new Coordinates(this.longitude);
-  //   final address =
-  //       await Geocoder.local.findAddressesFromCoordinates(coordinates);
-  //   this.selectedAddress = address.first;
-  //   print("${selectedAddress.featureName} : ${selectedAddress.addressLine}");
+  // getUserAddress() async {
+  //   List<geocoding.Placemark> placemarks =
+  //       await geocoding.placemarkFromCoordinates(latitude, longitude);
+  //
+  //   _placemark = placemarks.first;
+  // }
+
+  // Future<void> savePrefs() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setDouble('latitude', this.latitude);
+  //   prefs.setDouble('longitude', this.longitude);
+  //   prefs.setString('address', this._placemark.street.toString());
+  //   prefs.setString('location', this._placemark.country.toString());
   // }
 }

@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery_app/screens/home_screen.dart';
@@ -6,6 +6,7 @@ import 'package:delivery_app/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -14,6 +15,26 @@ class AuthProvider with ChangeNotifier {
   String error = '';
   UserServices _userServices = UserServices();
   bool loading = false;
+  late File image;
+  String pickerError = '';
+  bool isPicAvail = false;
+  String? email;
+//reduce image size
+  Future<File> getImage() async {
+    final picker = ImagePicker();
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+      notifyListeners();
+    } else {
+      this.pickerError = 'No image selected';
+      print('No image selected');
+      notifyListeners();
+    }
+    return this.image;
+  }
 
   Future<void> verifyPhone(
       {BuildContext? context,
@@ -129,6 +150,54 @@ class AuthProvider with ChangeNotifier {
           );
         });
     return goBack;
+  }
+
+//register vendor using email
+  Future<UserCredential> registerVendor(email, password) async {
+    this.email = email;
+    notifyListeners();
+    late UserCredential userCredential;
+    try {
+      userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        this.error = 'The password provided is too weak.';
+        notifyListeners();
+      } else if (e.code == 'email-already-in-use') {
+        this.error = 'The account already exists for that email.';
+        notifyListeners();
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      this.error = e.toString();
+      notifyListeners();
+      print(e);
+    }
+    return userCredential;
+  }
+
+  //save vendor data to firebase
+  Future<void> saveVendorDataToDb(
+      {String? url, String? shopName, String? mobile}) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    DocumentReference _vendors =
+        FirebaseFirestore.instance.collection('vendors').doc(user!.uid);
+    _vendors.set({
+      'uid': user.uid,
+      'shopNmae': shopName,
+      'mobile': mobile,
+      'email': this.email,
+      'shopOpen': true,
+      'rating': 0.00,
+      'totalRating': 0,
+      'isTopPicked': true,
+      'imageUrl': url
+    });
+    return null;
   }
 
   void _createUser({

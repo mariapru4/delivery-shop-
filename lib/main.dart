@@ -5,7 +5,9 @@ import 'package:delivery_app/providers/location_provider.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/screens/login_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
+import 'package:delivery_app/screens/register_screen.dart';
 import 'package:delivery_app/screens/welcome_screen.dart';
+import 'package:delivery_app/widgets/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.deepOrangeAccent),
+      theme:
+          ThemeData(primaryColor: Colors.deepOrangeAccent, fontFamily: 'Lato'),
       initialRoute: SplashScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
@@ -42,6 +45,8 @@ class MyApp extends StatelessWidget {
         SplashScreen.id: (context) => SplashScreen(),
         MapScreen.id: (context) => MapScreen(),
         LoginScreen.id: (context) => const LoginScreen(),
+        RegisterScreen.id: (context) => RegisterScreen(),
+        ShopPicCard.id: (context) => ShopPicCard(),
       },
     );
   }
