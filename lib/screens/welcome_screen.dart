@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:delivery_app/providers/auth_provider.dart';
 import 'package:delivery_app/providers/location_provider.dart';
+import 'package:delivery_app/screens/login_screen.dart';
+import 'package:delivery_app/screens/login_vendor_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
 import 'package:delivery_app/screens/onboard_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -142,66 +144,64 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Stack(
             children: [
-              Positioned(
-                  right: 0.0,
-                  top: 10.0,
-                  child: FlatButton(
-                    child: Text(
-                      'SKIP',
-                      style: TextStyle(color: Colors.deepOrangeAccent),
-                    ),
-                    onPressed: () {},
-                  )),
-              Column(
-                children: [
-                  Expanded(child: OnBaordScreen()),
-                  Text(
-                    'Ready to order from your nearest branch?',
-                    style: TextStyle(color: Colors.grey),
+              Column(children: [
+                Expanded(child: OnBaordScreen()),
+                Text(
+                  'Ready to order from your nearest branch?',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                FlatButton(
+                  color: Colors.deepOrangeAccent,
+                  onPressed: () async {
+                    await locationData.getCurrentPosition();
+                    if (locationData.permissonAllowed == true) {
+                      Navigator.pushReplacementNamed(context, MapScreen.id);
+                    } else {
+                      print('error');
+                    }
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Text(
+                    'Set Delivery Location',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FlatButton(
+                ),
+                FlatButton(
                     color: Colors.deepOrangeAccent,
-                    onPressed: () async {
-                      await locationData.getCurrentPosition();
-                      if (locationData.permissonAllowed == true) {
-                        Navigator.pushReplacementNamed(context, MapScreen.id);
-                      } else {
-                        print('error');
-                      }
-                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
-                    child: Text(
-                      'Set Delivery Location',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FlatButton(
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Already a Customer?',
-                        style: TextStyle(color: Colors.grey),
-                        children: [
-                          TextSpan(
-                              text: 'Login',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black))
-                        ],
-                      ),
-                    ),
                     onPressed: () {
-                      showBottonSheet(context);
+                      Navigator.pushReplacementNamed(
+                          context, LoginVendorScreen.id);
                     },
-                  )
-                ],
-              ),
+                    child:
+                        Text('Vendor', style: TextStyle(color: Colors.white))),
+                SizedBox(
+                  height: 20,
+                ),
+                FlatButton(
+                  child: RichText(
+                    text: const TextSpan(
+                      text: 'Already have an  Account?  ',
+                      style: TextStyle(color: Colors.grey),
+                      children: [
+                        TextSpan(
+                            text: 'Customer Login ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                      ],
+                    ),
+                  ),
+                  onPressed: () {
+                    showBottonSheet(context);
+                  },
+                ),
+              ]),
             ],
           )),
     );

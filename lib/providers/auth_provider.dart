@@ -19,6 +19,7 @@ class AuthProvider with ChangeNotifier {
   String pickerError = '';
   bool isPicAvail = false;
   String? email;
+
 //reduce image size
   Future<File> getImage() async {
     final picker = ImagePicker();
@@ -180,6 +181,46 @@ class AuthProvider with ChangeNotifier {
     return userCredential;
   }
 
+//login vendor
+  Future<UserCredential> loginVendor(email, password) async {
+    this.email = email;
+    notifyListeners();
+    late UserCredential userCredential;
+    try {
+      userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      this.error = e.code;
+      notifyListeners();
+    } catch (e) {
+      this.error = e.toString();
+      notifyListeners();
+      print(e);
+    }
+    return userCredential;
+  }
+
+//reset password
+  Future<void> resetPassword(email) async {
+    this.email = email;
+    notifyListeners();
+    UserCredential userCredential;
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+    } on FirebaseAuthException catch (e) {
+      this.error = e.code;
+      notifyListeners();
+    } catch (e) {
+      this.error = e.toString();
+      notifyListeners();
+      print(e);
+    }
+  }
+
   //save vendor data to firebase
   Future<void> saveVendorDataToDb(
       {String? url, String? shopName, String? mobile}) async {
@@ -195,7 +236,8 @@ class AuthProvider with ChangeNotifier {
       'rating': 0.00,
       'totalRating': 0,
       'isTopPicked': true,
-      'imageUrl': url
+      'imageUrl': url,
+      'accVerified': true
     });
     return null;
   }
