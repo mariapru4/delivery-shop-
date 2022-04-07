@@ -9,11 +9,6 @@ class ImageSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Future getSilderImageFromDb() async {
-    //   var _firestore = FirebaseFirestore.instance;
-    //   QuerySnapshot snapshot = await _firestore.collection('slider').get();
-    //   return snapshot.docs;
-    // }
     Future<List<ImageModel>> getBanners() async {
       List<ImageModel> result = new List<ImageModel>.empty(growable: true);
       CollectionReference bannerRef =
@@ -38,6 +33,7 @@ class ImageSlider extends StatelessWidget {
                 var banners = snapShot.data as List<ImageModel>;
                 return CarouselSlider(
                   options: CarouselOptions(
+                      viewportFraction: 1,
                       enlargeCenterPage: true,
                       aspectRatio: 2.0,
                       autoPlay: true,

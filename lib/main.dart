@@ -5,6 +5,7 @@ import 'package:delivery_app/providers/location_provider.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/screens/login_screen.dart';
 import 'package:delivery_app/screens/login_vendor_screen.dart';
+import 'package:delivery_app/screens/main_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
 import 'package:delivery_app/screens/register_screen.dart';
 import 'package:delivery_app/screens/welcome_screen.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         ShopPicCard.id: (context) => ShopPicCard(),
         LoginVendorScreen.id: (context) => LoginVendorScreen(),
         ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
+        MainScreen.id: (context) => MainScreen(),
       },
     );
   }

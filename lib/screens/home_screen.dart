@@ -1,5 +1,8 @@
 import 'package:delivery_app/main.dart';
+import 'package:delivery_app/screens/main_screen.dart';
 import 'package:delivery_app/screens/register_screen.dart';
+import 'package:delivery_app/screens/top_pick_store.dart';
+
 import 'package:delivery_app/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,28 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: Column(
           children: [
+            SizedBox(
+              height: 15,
+            ),
             ImageSlider(),
-            RaisedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => WelcomeScreen()));
-                });
-              },
-              child: Text('Sign Out'),
+            SizedBox(
+              height: 15,
             ),
-            RaisedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, WelcomeScreen.id);
-              },
-              child: Text('Home Screen'),
-            ),
-            RaisedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, RegisterScreen.id);
-              },
-              child: Text('Add Shop'),
-            ),
+            Container(height: 300, child: TopPickStore()),
           ],
         ),
       ),

@@ -31,7 +31,16 @@ class _MyAppState extends State<MyAppBar> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: Icon(Icons.power_settings_new),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, WelcomeScreen.id);
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: IconButton(
               icon: Icon(Icons.account_circle_outlined),
               onPressed: () {},
