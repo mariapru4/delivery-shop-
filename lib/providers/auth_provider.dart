@@ -19,6 +19,7 @@ class AuthProvider with ChangeNotifier {
   String pickerError = '';
   bool isPicAvail = false;
   String? email;
+  String? address;
 
 //reduce image size
   Future<File> getImage() async {
@@ -223,7 +224,7 @@ class AuthProvider with ChangeNotifier {
 
   //save vendor data to firebase
   Future<void> saveVendorDataToDb(
-      {String? url, String? shopName, String? mobile}) async {
+      {String? url, String? shopName, String? mobile, String? address}) async {
     User? user = FirebaseAuth.instance.currentUser;
     DocumentReference _vendors =
         FirebaseFirestore.instance.collection('vendors').doc(user!.uid);
@@ -237,7 +238,8 @@ class AuthProvider with ChangeNotifier {
       'totalRating': 0,
       'isTopPicked': true,
       'imageUrl': url,
-      'accVerified': true
+      'accVerified': true,
+      'address': address
     });
     return null;
   }

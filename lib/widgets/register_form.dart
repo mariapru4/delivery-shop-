@@ -22,6 +22,7 @@ class _RegisterFormState extends State<RegisterForm> {
   var _passwordTextController = TextEditingController();
   var _nameTextController = TextEditingController();
   String? email;
+  String? address;
   String? password;
   String? mobile;
   String? shopName;
@@ -137,6 +138,31 @@ class _RegisterFormState extends State<RegisterForm> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email_outlined),
                       labelText: 'Business Name',
+                      contentPadding: EdgeInsets.zero,
+                      enabledBorder: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 2, color: Theme.of(context).primaryColor)),
+                      focusColor: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.streetAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter Your Address';
+                      }
+                      setState(() {
+                        address = value;
+                      });
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.add),
+                      labelText: 'Address',
                       contentPadding: EdgeInsets.zero,
                       enabledBorder: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
@@ -267,6 +293,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                         url: url,
                                         mobile: mobile,
                                         shopName: shopName,
+                                        address: address,
                                       )
                                           .then((value) {
                                         setState(() {
