@@ -1,6 +1,7 @@
 import 'package:delivery_app/providers/auth_provider.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/screens/register_screen.dart';
+import 'package:delivery_app/screens/vendor_home_screen.dart';
 import 'package:delivery_app/widgets/reset_password.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
@@ -165,7 +166,7 @@ class _LoginVendorScreenState extends State<LoginVendorScreen> {
                                       loading = false;
                                     });
                                     Navigator.pushReplacementNamed(
-                                        context, HomeScreen.id);
+                                        context, VendorHomeScreen.id);
                                   } else {
                                     setState(() {
                                       loading = false;
