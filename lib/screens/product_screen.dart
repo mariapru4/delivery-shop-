@@ -1,7 +1,10 @@
 import 'dart:ui';
 
 import 'package:delivery_app/screens/add_new_product_screen.dart';
+import 'package:delivery_app/widgets/unpublished_product.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/published_product.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -78,12 +81,8 @@ class ProductScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 child: TabBarView(children: [
-                  Center(
-                    child: Text('Published Products'),
-                  ),
-                  Center(
-                    child: Text('Un Published Products'),
-                  ),
+                  PublishedProduct(),
+                  UnPublishedProduct(),
                 ]),
               ),
             ),

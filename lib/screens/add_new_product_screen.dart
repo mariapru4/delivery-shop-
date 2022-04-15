@@ -108,7 +108,15 @@ class _AddNewProductState extends State<AddNewProduct> {
                                           weight: productWight,
                                           productName: productName);
                                       setState(() {
+                                        //clear all the existing value after saved product
                                         _formKey.currentState!.reset();
+                                        _comparedPriceTextController.clear();
+                                        dropdownValue = null;
+                                        _subCategoryTextController.clear();
+                                        _categoryTextController.clear();
+                                        _track = false;
+                                        _image = null;
+                                        _visible = false;
                                       });
                                     } else {
                                       _provider.alertDialog(
