@@ -17,6 +17,7 @@ import 'package:delivery_app/widgets/reset_password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme:
           ThemeData(primaryColor: Colors.deepOrangeAccent, fontFamily: 'Lato'),
+      builder: EasyLoading.init(),
       initialRoute: SplashScreen.id,
       routes: {
         HomeScreen.id: (context) => HomeScreen(),
