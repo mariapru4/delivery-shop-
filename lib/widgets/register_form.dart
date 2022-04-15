@@ -286,7 +286,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                   .registerVendor(email, password)
                                   .then((credential) {
                                 if (credential.user!.uid != null) {
-                                  uploadFile(_authData.image.path).then((url) {
+                                  uploadFile(_authData.image!.path).then((url) {
                                     if (url != null) {
                                       _authData
                                           .saveVendorDataToDb(

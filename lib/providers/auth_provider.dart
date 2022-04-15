@@ -15,14 +15,14 @@ class AuthProvider with ChangeNotifier {
   String error = '';
   UserServices _userServices = UserServices();
   bool loading = false;
-  late File image;
+  File? image;
   String pickerError = '';
   bool isPicAvail = false;
   String? email;
   String? address;
 
 //reduce image size
-  Future<File> getImage() async {
+  Future<File?> getImage() async {
     final picker = ImagePicker();
     final pickedFile =
         await picker.getImage(source: ImageSource.gallery, imageQuality: 20);

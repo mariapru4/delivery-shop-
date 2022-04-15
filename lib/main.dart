@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:delivery_app/providers/auth_provider.dart';
 import 'package:delivery_app/providers/location_provider.dart';
+import 'package:delivery_app/providers/product_provider.dart';
 import 'package:delivery_app/screens/add_new_product_screen.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/screens/login_screen.dart';
@@ -28,6 +29,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (_) => LocationPovider(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => ProductProvider(),
       )
     ],
     child: MyApp(),
