@@ -101,12 +101,6 @@ class PublishedProduct extends StatelessWidget {
                     leading: Icon(Icons.check),
                     title: Text('un Publish'),
                   )),
-              const PopupMenuItem<String>(
-                  value: 'preview',
-                  child: ListTile(
-                    leading: Icon(Icons.info_outline),
-                    title: Text('Preview'),
-                  )),
             ]);
   }
 }

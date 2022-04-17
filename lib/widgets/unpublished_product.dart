@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_app/screens/edit_view_screen.dart';
 import 'package:delivery_app/services/firebase_services.dart';
 import 'package:flutter/material.dart';
 
@@ -22,16 +23,19 @@ class UnPublishedProduct extends StatelessWidget {
             );
           }
           return SingleChildScrollView(
-            child: DataTable(
-              showBottomBorder: true,
-              dataRowHeight: 75,
-              headingRowColor: MaterialStateProperty.all(Colors.grey),
-              columns: <DataColumn>[
-                DataColumn(label: Expanded(child: Text('Product Name'))),
-                DataColumn(label: Expanded(child: Text('Image'))),
-                DataColumn(label: Expanded(child: Text('Actions'))),
-              ],
-              rows: productDetails(snapshot.data),
+            child: FittedBox(
+              child: DataTable(
+                showBottomBorder: true,
+                dataRowHeight: 75,
+                headingRowColor: MaterialStateProperty.all(Colors.grey),
+                columns: <DataColumn>[
+                  DataColumn(label: Expanded(child: Text('Product '))),
+                  DataColumn(label: Expanded(child: Text('Image'))),
+                  DataColumn(label: Expanded(child: Text('Info'))),
+                  DataColumn(label: Expanded(child: Text('Actions'))),
+                ],
+                rows: productDetails(snapshot.data, context),
+              ),
             ),
           );
         },
@@ -39,7 +43,7 @@ class UnPublishedProduct extends StatelessWidget {
     );
   }
 
-  List<DataRow> productDetails(QuerySnapshot? snapshot) {
+  List<DataRow> productDetails(QuerySnapshot? snapshot, context) {
     List<DataRow> newList = snapshot!.docs.map((DocumentSnapshot document) {
       return DataRow(cells: [
         DataCell(Container(
@@ -47,11 +51,10 @@ class UnPublishedProduct extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           title: Row(
             children: [
-              Expanded(
-                  child: Text(
-                'Name:',
+              Text(
+                'Name: ',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-              )),
+              ),
               Expanded(
                   child: Text(
                 document['productName'],
@@ -76,9 +79,28 @@ class UnPublishedProduct extends StatelessWidget {
           Container(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.network(document['productImage'] ?? "default data"),
+            child: Image.network(
+              document['productImage'] ?? "default data",
+              width: 50,
+            ),
           )),
         ),
+        DataCell(IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditViewProduct(
+                          productId: document['productId'],
+                        )),
+              );
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //             EditViewProduct(produtId: document['productId'])));
+            },
+            icon: Icon(Icons.info_outline))),
         DataCell(popUpButton(document.data())),
       ]);
     }).toList();
@@ -102,18 +124,6 @@ class UnPublishedProduct extends StatelessWidget {
                   child: ListTile(
                     leading: Icon(Icons.check),
                     title: Text('Publish'),
-                  )),
-              const PopupMenuItem<String>(
-                  value: 'preview',
-                  child: ListTile(
-                    leading: Icon(Icons.info_outline),
-                    title: Text('Preview'),
-                  )),
-              const PopupMenuItem<String>(
-                  value: 'edit',
-                  child: ListTile(
-                    leading: Icon(Icons.edit_outlined),
-                    title: Text('Edit Product'),
                   )),
               const PopupMenuItem<String>(
                   value: 'delete',

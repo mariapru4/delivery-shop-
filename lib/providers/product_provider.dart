@@ -137,4 +137,54 @@ class ProductProvider with ChangeNotifier {
     }
     return null;
   }
+
+  Future<void> updateProduct({
+    productName,
+    description,
+    price,
+    comparedPrice,
+    collection,
+    sku,
+    weight,
+    stockQty,
+    context,
+    productId,
+    lowStockQty,
+    image,
+    category,
+    subCategory,
+    categoryImage,
+  }) async {
+    CollectionReference _products =
+        FirebaseFirestore.instance.collection('products');
+    try {
+      await _products.doc(productId).update({
+        'productName': productName,
+        'description': description,
+        'price': price,
+        'comparedPrice': comparedPrice,
+        'collection': collection,
+        'sku': sku,
+        'category': {
+          'maincategory': category,
+          'subCategory': subCategory,
+          'categoryImage':
+              this.categoryImage == null ? categoryImage : this.categoryImage,
+        },
+        'weight': weight,
+        'stockQty': stockQty,
+        'lowStockQty': lowStockQty,
+        'productImage': this.productUrl == null ? image : this.productUrl
+      });
+      this.alertDialog(
+        context: context,
+        title: 'SAVE DATA',
+        content: 'Product Details saved successfully',
+      );
+    } catch (e) {
+      this.alertDialog(
+          context: context, title: 'SAVE DATA', content: '${e.toString()}');
+    }
+    return null;
+  }
 }
