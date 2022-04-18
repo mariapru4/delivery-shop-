@@ -88,17 +88,10 @@ class UnPublishedProduct extends StatelessWidget {
         DataCell(IconButton(
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => EditViewProduct(
-                          productId: document['productId'],
-                        )),
-              );
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) =>
-              //             EditViewProduct(produtId: document['productId'])));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          EditViewProduct(productId: document['productId'])));
             },
             icon: Icon(Icons.info_outline))),
         DataCell(popUpButton(document.data())),

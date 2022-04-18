@@ -373,7 +373,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                                             }).whenComplete(() {
                                           setState(() {
                                             _categoryTextController.text =
-                                                _provider.selectedCategory!;
+                                                _provider.selectedCategory;
                                             _visible = true;
                                           });
                                         });
@@ -427,7 +427,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                                             }).whenComplete(() {
                                           setState(() {
                                             _subCategoryTextController.text =
-                                                _provider.selectedSubCategory!;
+                                                _provider.selectedSubCategory;
                                           });
                                         });
                                       },

@@ -76,7 +76,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           sliderItem('Product', Icons.add_circle),
           sliderItem('Coupons', CupertinoIcons.gift),
           sliderItem('Orders', Icons.list_alt_outlined),
-          sliderItem('Reports', Icons.stacked_bar_chart),
+          sliderItem('Banner', CupertinoIcons.photo),
           sliderItem('Setting', Icons.settings),
           sliderItem('LogOut', Icons.exit_to_app_outlined)
         ],
