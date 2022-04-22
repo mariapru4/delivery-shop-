@@ -10,6 +10,8 @@ import 'package:delivery_app/screens/login_screen.dart';
 import 'package:delivery_app/screens/login_vendor_screen.dart';
 import 'package:delivery_app/screens/main_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
+import 'package:delivery_app/screens/product_details_screen.dart';
+
 import 'package:delivery_app/screens/product_list_screen.dart';
 
 import 'package:delivery_app/screens/register_screen.dart';
@@ -17,7 +19,7 @@ import 'package:delivery_app/screens/vendor_customer_screen.dart';
 import 'package:delivery_app/screens/vendor_home_screen.dart';
 import 'package:delivery_app/screens/welcome_screen.dart';
 import 'package:delivery_app/widgets/image_picker.dart';
-import 'package:delivery_app/widgets/reset_password.dart';
+import 'package:delivery_app/widgets/vendor/reset_password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +75,7 @@ class MyApp extends StatelessWidget {
         AddNewProduct.id: (context) => AddNewProduct(),
         VendorCustomerScreen.id: (context) => VendorCustomerScreen(),
         ProductListScreen.id: (context) => ProductListScreen(),
+        ProductDetailsScreen.id: (context) => ProductDetailsScreen()
       },
     );
   }

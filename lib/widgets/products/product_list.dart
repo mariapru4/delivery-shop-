@@ -35,48 +35,48 @@ class ProductListWidget extends StatelessWidget {
 
         return Column(
           children: [
-            Container(
-              height: 50,
-              color: Colors.grey,
-              child: ListView(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 2, left: 6),
-                    child: Chip(
-                      label: Text('Sub Category'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 2, left: 6),
-                    child: Chip(
-                      label: Text('Sub Category'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 2, left: 6),
-                    child: Chip(
-                      label: Text('Sub Category'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 2, left: 6),
-                    child: Chip(
-                      label: Text('Sub Category'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   height: 50,
+            //   color: Colors.grey,
+            //   child: ListView(
+            //     padding: EdgeInsets.zero,
+            //     scrollDirection: Axis.horizontal,
+            //     children: [
+            //       Padding(
+            //         padding: const EdgeInsets.only(right: 2, left: 6),
+            //         child: Chip(
+            //           label: Text('Sub Category'),
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(4)),
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.only(right: 2, left: 6),
+            //         child: Chip(
+            //           label: Text('Sub Category'),
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(4)),
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.only(right: 2, left: 6),
+            //         child: Chip(
+            //           label: Text('Sub Category'),
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(4)),
+            //         ),
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.only(right: 2, left: 6),
+            //         child: Chip(
+            //           label: Text('Sub Category'),
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(4)),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Container(
               width: MediaQuery.of(context).size.width,
               height: 56,

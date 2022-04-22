@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/store_provider.dart';
 import '../widgets/products/recently_added_products.dart';
-import '../widgets/vendor_banner_slider.dart';
+import '../widgets/vendor/vendor_banner_slider.dart';
 
 class VendorCustomerScreen extends StatelessWidget {
   static const String id = 'vendor-customer-screen';

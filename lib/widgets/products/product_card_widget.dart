@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery_app/screens/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ProductCard extends StatelessWidget {
   final DocumentSnapshot document;
@@ -28,12 +30,25 @@ class ProductCard extends StatelessWidget {
                 Material(
                   elevation: 5,
                   borderRadius: BorderRadius.circular(10),
-                  child: SizedBox(
-                    height: 120,
-                    width: 120,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(document['productImage']),
+                  child: InkWell(
+                    onTap: () {
+                      pushNewScreenWithRouteSettings(context,
+                          screen: ProductDetailsScreen(
+                            document: document,
+                          ),
+                          settings:
+                              RouteSettings(name: ProductDetailsScreen.id),
+                          withNavBar: false,
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino);
+                    },
+                    child: SizedBox(
+                      height: 120,
+                      width: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(document['productImage']),
+                      ),
                     ),
                   ),
                 ),

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../services/firebase_services.dart';
+import '../../services/firebase_services.dart';
 
 class PublishedProduct extends StatelessWidget {
   const PublishedProduct({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:delivery_app/widgets/image_picker.dart';
-import 'package:delivery_app/widgets/register_form.dart';
+import 'package:delivery_app/widgets/vendor/register_form.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {

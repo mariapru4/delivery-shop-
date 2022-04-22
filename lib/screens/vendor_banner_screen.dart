@@ -10,7 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/vendor_banner_card.dart';
+import '../widgets/vendor/vendor_banner_card.dart';
 
 class VendorBannerScreen extends StatefulWidget {
   const VendorBannerScreen({Key? key}) : super(key: key);

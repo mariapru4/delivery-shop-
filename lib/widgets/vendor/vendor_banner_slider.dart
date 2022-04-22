@@ -4,7 +4,7 @@ import 'package:delivery_app/services/store_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/image_model.dart';
+import '../../models/image_model.dart';
 
 class VendorBannerSlider extends StatefulWidget {
   const VendorBannerSlider({Key? key}) : super(key: key);
