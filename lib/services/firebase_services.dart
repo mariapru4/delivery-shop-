@@ -24,7 +24,7 @@ class FirebaseServices {
   }
 
   Future<void> saveBanner(url) {
-    return vendorBanner.add({'imageUrl': url, 'sellerUid': user!.uid});
+    return vendorBanner.add({'image': url, 'sellerUid': user!.uid});
   }
 
   Future<void> deleteBanner({id}) {

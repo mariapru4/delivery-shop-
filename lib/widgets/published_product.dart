@@ -25,7 +25,7 @@ class PublishedProduct extends StatelessWidget {
           return SingleChildScrollView(
             child: DataTable(
               showBottomBorder: true,
-              dataRowHeight: 75,
+              dataRowHeight: 77,
               headingRowColor: MaterialStateProperty.all(Colors.grey),
               columns: <DataColumn>[
                 DataColumn(label: Expanded(child: Text('Product Name'))),

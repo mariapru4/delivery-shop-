@@ -20,6 +20,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String? _location;
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   void initState() {
@@ -33,18 +40,39 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: Size.fromHeight(112),
         child: MyAppBar(),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            ImageSlider(),
-            SizedBox(
-              height: 15,
-            ),
-            Container(height: 300, child: TopPickStore()),
-          ],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.deepOrangeAccent,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_shopping_cart_outlined),
+            label: 'Orders',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_border_outlined),
+            label: 'Favorite',
+          ),
+        ],
+        currentIndex: _selectedIndex, //New
+        onTap: _onItemTapped,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              ImageSlider(),
+              SizedBox(
+                height: 15,
+              ),
+              Container(height: 300, child: TopPickStore()),
+            ],
+          ),
         ),
       ),
     );

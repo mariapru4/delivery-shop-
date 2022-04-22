@@ -34,7 +34,7 @@ class VendorBannerCard extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child: Card(
                         child: Image.network(
-                          document['imageUrl'],
+                          document['image'],
                           fit: BoxFit.fill,
                         ),
                       ),

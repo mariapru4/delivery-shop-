@@ -3,13 +3,17 @@ import 'dart:async';
 import 'package:delivery_app/providers/auth_provider.dart';
 import 'package:delivery_app/providers/location_provider.dart';
 import 'package:delivery_app/providers/product_provider.dart';
+import 'package:delivery_app/providers/store_provider.dart';
 import 'package:delivery_app/screens/add_new_product_screen.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/screens/login_screen.dart';
 import 'package:delivery_app/screens/login_vendor_screen.dart';
 import 'package:delivery_app/screens/main_screen.dart';
 import 'package:delivery_app/screens/map_screen.dart';
+import 'package:delivery_app/screens/product_list_screen.dart';
+
 import 'package:delivery_app/screens/register_screen.dart';
+import 'package:delivery_app/screens/vendor_customer_screen.dart';
 import 'package:delivery_app/screens/vendor_home_screen.dart';
 import 'package:delivery_app/screens/welcome_screen.dart';
 import 'package:delivery_app/widgets/image_picker.dart';
@@ -34,6 +38,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (_) => ProductProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => StoreProvider(),
       )
     ],
     child: MyApp(),
@@ -64,6 +71,8 @@ class MyApp extends StatelessWidget {
         MainScreen.id: (context) => MainScreen(),
         VendorHomeScreen.id: (context) => VendorHomeScreen(),
         AddNewProduct.id: (context) => AddNewProduct(),
+        VendorCustomerScreen.id: (context) => VendorCustomerScreen(),
+        ProductListScreen.id: (context) => ProductListScreen(),
       },
     );
   }
