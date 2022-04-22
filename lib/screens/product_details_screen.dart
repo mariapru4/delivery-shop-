@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:delivery_app/widgets/products/bottom_sheet.dart';
 import 'package:expandable_text/expandable_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   static const String id = 'product-details-screen';
@@ -24,75 +25,7 @@ class ProductDetailsScreen extends StatelessWidget {
             IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.search))
           ],
         ),
-        bottomSheet: Container(
-          child: Row(
-            children: [
-              Expanded(
-                  child: InkWell(
-                onTap: () {
-                  EasyLoading.show(status: 'Saving ...');
-                  saveForLater().then((value) {
-                    EasyLoading.showSuccess('Saved Succesfullt');
-                  });
-                },
-                child: Container(
-                  height: 56,
-                  color: Colors.grey[800],
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            CupertinoIcons.bookmark,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Save for later',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )),
-              Expanded(
-                  child: Container(
-                height: 56,
-                color: Colors.deepOrangeAccent,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.shopping_basket_outlined,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Add to Cart',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ))
-            ],
-          ),
-        ),
+        bottomSheet: BottomSheetContainer(document),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
@@ -197,13 +130,5 @@ class ProductDetailsScreen extends StatelessWidget {
             ],
           ),
         ));
-  }
-
-  Future<void> saveForLater() {
-    CollectionReference _favourite =
-        FirebaseFirestore.instance.collection('favourites');
-    User? user = FirebaseAuth.instance.currentUser;
-    return _favourite
-        .add({'product': document!.data(), 'customerId': user!.uid});
   }
 }
