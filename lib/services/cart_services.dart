@@ -6,9 +6,11 @@ class CartServices {
   User? user = FirebaseAuth.instance.currentUser;
 
   Future<void> addToCart(document) {
-    cart
-        .doc(user!.uid)
-        .set({'user': user!.uid, 'sellerUid': document['seller']['sellerUid']});
+    cart.doc(user!.uid).set({
+      'user': user!.uid,
+      'sellerUid': document['seller']['sellerUid'],
+      'shopName': document['seller']['shopName']
+    });
     return cart.doc(user!.uid).collection('products').add({
       'productId': document['productId'],
       'productName': document['productName'],
@@ -56,5 +58,10 @@ class CartServices {
     if (snapshot.docs.length == 0) {
       cart.doc(user!.uid).delete();
     }
+  }
+
+  Future<String> checkSeller() async {
+    final snapshot = await cart.doc(user!.uid).get();
+    return snapshot.exists ? snapshot['shopName'] : null;
   }
 }
