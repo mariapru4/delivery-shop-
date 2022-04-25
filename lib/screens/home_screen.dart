@@ -4,6 +4,7 @@ import 'package:delivery_app/screens/register_screen.dart';
 import 'package:delivery_app/screens/top_pick_store.dart';
 
 import 'package:delivery_app/screens/welcome_screen.dart';
+import 'package:delivery_app/widgets/cart/cart_notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 56),
+        child: CartNotification(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(112),
         child: MyAppBar(),

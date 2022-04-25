@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:delivery_app/providers/auth_provider.dart';
+import 'package:delivery_app/providers/cart_provider.dart';
 import 'package:delivery_app/providers/location_provider.dart';
 import 'package:delivery_app/providers/product_provider.dart';
 import 'package:delivery_app/providers/store_provider.dart';
 import 'package:delivery_app/screens/add_new_product_screen.dart';
+import 'package:delivery_app/screens/cart_screen.dart';
 import 'package:delivery_app/screens/home_screen.dart';
 import 'package:delivery_app/screens/login_screen.dart';
 import 'package:delivery_app/screens/login_vendor_screen.dart';
@@ -43,6 +45,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (_) => StoreProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => CartProvider(),
       )
     ],
     child: MyApp(),
@@ -75,7 +80,8 @@ class MyApp extends StatelessWidget {
         AddNewProduct.id: (context) => AddNewProduct(),
         VendorCustomerScreen.id: (context) => VendorCustomerScreen(),
         ProductListScreen.id: (context) => ProductListScreen(),
-        ProductDetailsScreen.id: (context) => ProductDetailsScreen()
+        ProductDetailsScreen.id: (context) => ProductDetailsScreen(),
+        CartScreen.id: (context) => ProductDetailsScreen()
       },
     );
   }
